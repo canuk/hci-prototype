@@ -1,0 +1,33 @@
+<%= form_for(@prompt) do |f| %>
+  <% if @prompt.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@prompt.errors.count, "error") %> prohibited this prompt from being saved:</h2>
+
+      <ul>
+      <% @prompt.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :text %><br>
+    <%= f.text_field :prompt_text, class: 'form-control'  %>
+  </div>
+  <div class="field">
+    <label>Placeholder text</label><br>
+    <%= f.text_field :prompt_placeholder_text, class: 'form-control'  %>
+  </div>
+  <div class="field">
+    <%= f.label :prompt_type %><br>
+    <%= f.select :prompt_type, options_for_select([ "open_ended", "multiple_choice", "duel" ], "open_ended"), class: 'form-control'  %>
+  </div>
+  <div class="field">
+    <%= f.label :active %><br>
+    <%= f.check_box :active, class: 'form-control' %>
+  </div>
+  <div class="actions">
+    <%= f.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

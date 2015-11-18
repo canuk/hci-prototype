@@ -11,10 +11,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117001635) do
+ActiveRecord::Schema.define(version: 20151117062930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "prompt_id"
+    t.integer  "choice_id"
+    t.string   "answer_text"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "choices", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "prompt_id"
+    t.string   "choice_text"
+    t.integer  "order"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "prompts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "prompt_text"
+    t.string   "prompt_placeholder_text"
+    t.string   "prompt_type"
+    t.boolean  "active"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

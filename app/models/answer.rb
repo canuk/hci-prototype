@@ -1,0 +1,7 @@
+class Answer < ActiveRecord::Base
+
+  belongs_to :user
+  belongs_to :prompt
+  belongs_to :choice
+
+end
