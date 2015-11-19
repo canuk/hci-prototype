@@ -23,11 +23,37 @@
     <%= f.label :prompt_type %><br>
     <%= f.select :prompt_type, options_for_select([ "open_ended", "multiple_choice", "duel" ], "open_ended"), class: 'form-control'  %>
   </div>
-  <div class="field">
-    <%= f.label :active %><br>
-    <%= f.check_box :active, class: 'form-control' %>
+  
+  <br/>
+  <%= f.add_nested_fields_link :choices, 'Add prompt choice', class: 'btn btn-primary', role: 'button' %>
+  <br/>
+  
+  <div id="nested_fields">
+  <%= f.nested_fields_for :choices do |ff| %>
+    <div class="panel panel-default">
+      <div class="panel-heading">Choice <%= ff.remove_nested_fields_link %></div>
+      <div class="panel-body">
+        
+        <%= ff.text_field :choice_text, class: 'form-control' %>
+      </div>
+    </div>
+  <% end %>
   </div>
+
   <div class="actions">
     <%= f.submit class: 'btn btn-primary' %>
   </div>
+<% end %>
+
+<% content_for :footer do %>
+<script type="text/javascript">
+  $('#prompt_prompt_type').change(function (){
+    if ( $('#prompt_prompt_type option:selected').val() === "open_ended" ) {
+      $("#nested_fields").hide();
+    } else {
+      $("#nested_fields").show();
+    }
+  });
+</script>
+
 <% end %>

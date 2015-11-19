@@ -24,6 +24,7 @@ class AnswersController < ApplicationController
   def record
     @answer = Answer.new
     @answer.prompt_id = params[:prompt_id]
+    @answer.choice_id = params[:choice_id]
     @answer.answer_text = params[:answer]
 
     respond_to do |format|

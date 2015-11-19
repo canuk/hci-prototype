@@ -25,6 +25,7 @@ class ChoicesController < ApplicationController
   # POST /choices.json
   def create
     @choice = Choice.new(choice_params)
+    @choice.user_id = current_user.id
 
     respond_to do |format|
       if @choice.save
@@ -69,6 +70,6 @@ class ChoicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def choice_params
-      params.require(:choice).permit(:user_id, :prompt_id, :text, :order)
+      params.require(:choice).permit(:user_id, :prompt_id, :choice_text, :order)
     end
 end

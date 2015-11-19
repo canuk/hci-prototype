@@ -1,38 +1,21 @@
 <% content_for :title do %>Word Cloud<% end %>
-<canvas id="canvas_cloud"></canvas>
 
 <div class="container">
 <h3>Word Cloud</h3>
       <div class="row">
-        <div class="col-md-12">
-          
+        <div class="col-md-12" id="canvas-container">
+          <div id="example" style="width: 550px; height: 350px;"></div>    
         </div>
       </div>
 </div>
 <% content_for :footer do %>
 
-
-<script src="/js/wordfreq.js"></script>
-<script src="/js/wordfreq.worker.js"></script>
-<script src="/js/wordcloud2.js"></script>
-
-<% a = Answer.where(prompt_id: 1).all %>
-<% answers = "" %>
-<% a.each do |answer| %>
-<% answers += answer.answer_text + " " %>
-<% end %>
 <script type="text/javascript">
-  // Create an options object for initialization
-  var options = {
-    workerUrl: '/js/wordfreq.worker.js' };
-  // Initialize and run process() function
-  var text = "<%= answers.to_s %>";
-  var wordfreq = WordFreqSync(options).process(text);
-    // console.log the list returned in this callback.
-    console.log(JSON.stringify(wordfreq));
-    var list = JSON.stringify(wordfreq)
-    WordCloud(document.getElementById('canvas_cloud'), { list: list } );
-
-
+      var word_array = [<%= raw @word_list%>];
+      
+      $(function() {
+        // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
+        $("#example").jQCloud(word_array);
+      });
 </script>
 <% end %>

@@ -19,7 +19,7 @@
         <td><%= prompt.user_id %></td>
         <td><%= prompt.prompt_text %></td>
         <td><%= prompt.prompt_type %></td>
-        <td><%= prompt.active %></td>
+        <td><input type="radio" name="choicesRadio" id="choicesRadio<%=prompt.id%>" value="<%=prompt.active%>" <%=prompt.active? ? "checked":""%>></td>
         <td><%= link_to 'Show', prompt %></td>
         <td><%= link_to 'Edit', edit_prompt_path(prompt) %></td>
         <td><%= link_to 'Destroy', prompt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New Prompt', new_prompt_path %>
+<%= link_to 'New Prompt', new_prompt_path, class: 'btn btn-primary' %>
