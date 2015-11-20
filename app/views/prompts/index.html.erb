@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Prompts</h1>
+<h1>Prompts <%= link_to 'Create Prompt', new_prompt_path, class: 'btn btn-primary' %></h1>
 
 <table class="table">
   <thead>
     <tr>
-      <th>User</th>
       <th>Prompt Text</th>
+      <th>Responses</th>
       <th>Prompt type</th>
       <th>Active</th>
       <th colspan="3"></th>
@@ -16,10 +16,10 @@
   <tbody>
     <% @prompts.each do |prompt| %>
       <tr>
-        <td><%= prompt.user_id %></td>
         <td><%= prompt.prompt_text %></td>
-        <td><%= prompt.prompt_type %></td>
-        <td><input type="radio" name="choicesRadio" id="choicesRadio<%=prompt.id%>" value="<%=prompt.active%>" <%=prompt.active? ? "checked":""%>></td>
+        <td><span class="badge"><%= prompt.answers.count %></span></td>
+        <td><span class="label label-<%=prompt_type_label(prompt.prompt_type)%>"><%= prompt.prompt_type %></span></td>
+        <td><input type="radio" name="is_active" id="is_active_<%=prompt.id%>" value="<%=prompt.id%>" <%=prompt.active? ? "checked":""%>></td>
         <td><%= link_to 'Show', prompt %></td>
         <td><%= link_to 'Edit', edit_prompt_path(prompt) %></td>
         <td><%= link_to 'Destroy', prompt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -28,6 +28,10 @@
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Prompt', new_prompt_path, class: 'btn btn-primary' %>
+<% content_for :footer do %>
+<script type="text/javascript">
+  $("input[name='is_active']").change(function(){
+    console.log($(this).val());
+});
+</script>
+<% end %>

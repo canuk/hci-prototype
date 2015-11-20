@@ -4,7 +4,7 @@ class PromptsController < ApplicationController
   # GET /prompts
   # GET /prompts.json
   def index
-    @prompts = Prompt.all
+    @prompts = Prompt.order('created_at ASC').all
   end
 
   # GET /prompts/1
