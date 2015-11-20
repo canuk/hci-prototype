@@ -25,7 +25,6 @@ class PromptsController < ApplicationController
   # POST /prompts.json
   def create
     @prompt = Prompt.new(prompt_params)
-    @prompt.user_id = current_user.id
 
     respond_to do |format|
       if @prompt.save
