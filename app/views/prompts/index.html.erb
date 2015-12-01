@@ -30,8 +30,14 @@
 
 <% content_for :footer do %>
 <script type="text/javascript">
-  $("input[name='is_active']").change(function(){
+  $("input[name='is_active']:radio").change(function(){
     console.log($(this).val());
-});
+        $.ajax({
+            url: "/prompts/set_active/"+$(this).val(), 
+            success: function(result){
+                $("#div1").html(result);
+              }
+        });
+  });
 </script>
 <% end %>

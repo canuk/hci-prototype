@@ -21,6 +21,22 @@ class PromptsController < ApplicationController
   def edit
   end
 
+  def set_active
+    current_active_prompts = Prompt.where(active: true).all
+    new_active_prompt = Prompt.find(params[:id])
+    
+    current_active_prompts.each do |prompt|
+      prompt.active = false
+      prompt.save
+    end
+ 
+    new_active_prompt.active = true
+    new_active_prompt.save
+  
+    render nothing: true
+  
+  end
+
   # POST /prompts
   # POST /prompts.json
   def create
