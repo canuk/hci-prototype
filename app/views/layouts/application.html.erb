@@ -6,15 +6,38 @@
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Read the Room" %>">
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Lato|Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
     <%= javascript_include_tag 'application' %>
     <%= csrf_meta_tags %>
     <link href="/favicon.ico" rel="icon" type="image/x-icon" />
+    <style type="text/css">
+      .navbar-inner {
+          min-height: 0px;
+      }
+      
+      .navbar-brand,
+      .navbar-nav li a {
+          line-height: 66px;
+          height: 66px;
+          padding-top: 0;
+          margin-top: 5px;
+      }
+      .navbar-custom { background-color: #0DACDD; }
+      .btn-orange { background: #FB923A; }
+    </style>
+    <%= yield :head %>
   </head>
-  <body>
+  <body style="background-color: #fdfdfd;">
     <header>
-      <%= render 'layouts/navigation' %>
+      <nav class="navbar navbar-custom navbar-fixed-top"  height="66">
+        <div class="container">
+          <div class="navbar-header">
+            <%= image_tag "philz_coffee_logo.png", class: "navbar-brand", height: "66" %>
+          </div>
+        </div>
+      </nav>
     </header>
-    <main role="main">
+    <main role="main" style="padding-top: 40px;">
        <%= render 'layouts/messages' %>
        <%= yield %>
     </main>

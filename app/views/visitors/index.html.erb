@@ -1,42 +1,65 @@
+<% content_for :head do %>
+<style type="text/css">
+  .hello {
+    font-family: font-family: 'Lato', sans-serif;
+    font-size: 144px;
+    color: #000000;
+    line-height: 197px;
+  }
+  p { color: #0e0e0e; font-family: 'Open Sans', sans-serif; font-weight: 300; font-size: 18px }
+  .normal-font { font-family: 'Open Sans', sans-serif; font-weight: 400; }
+  .bold-font { font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 24px; }
+</style>
+<% end %>
+
 <!-- Page Content -->
 <div class="container">
 
     <div class="row">
-        <div class="col-lg-12 text-center">
-          <h1>Connect to Coffee Shop WiFi</h1>
-          <h2>See what interests people at the <span class="text-success">Coffee Shop</span> <em>right now</em>!</h2>
-          <h2 class="form-signin-heading lead"><%= @prompt.prompt_text %></h2>
-          <% if @choices.blank? %>
-          <label for="inputEmail" class="sr-only">Type your response here!</label>
-          <input id="answer" type="input" class="form-control" placeholder="<%= @prompt.prompt_placeholder_text %>" required autofocus>
-          <br/>
-          <label>
-          <% else %>
-          <% @choices.each do |choice| %>
-          <div class="radio">
-            <label>
-              <input type="radio" name="choicesRadio" id="choicesRadio<%=choice.id%>" value="<%=choice.id%>">
-              <%=choice.choice_text%>
-            </label>
-          </div>
-          <% end %>
-          <% end %>
-
-            <input type="checkbox"> I agree to <a href="/pages/terms">the terms</a>.
-          </label>
-
-          <button id="connect_and_view" class="btn btn-lg btn-primary btn-block" type="submit">Connect and read the room</button>
-          <button id="just_connect" class="btn btn-lg btn-default btn-block" type="submit">Just connect to WiFi</button>
+        <div class="col-md-2 col-md-offset-2 text-right"><%= image_tag "generic_boy_avatar.png", height: "280" %></div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12">
+              <span class="hello">Hello</span><br/>
+              <p>Connect to WiFi and join our community!</p>
+              <hr style="border-top: dotted 1px;color: #979797" />
+              <%= @prompt.prompt_text %><br/>
+              <% if @choices.blank? %>
+              <label for="inputEmail" class="sr-only">Type your response here!</label>
+              <input id="answer" type="input" class="form-control" placeholder="<%= @prompt.prompt_placeholder_text %>" required autofocus>
+              <% else %>
+              <div id="holder">
+                <div>
+                  <table>
+                  <% @choices.each do |choice| %>
+                    <tr>
+                    <td><input type="radio" id="choicesRadio<%=choice.id%>" name="choicesRadio" class="regular-radio" value="<%=choice.id%>"/><label for="choicesRadio<%=choice.id%>"></label></td>
+                    <td valign="top"><span class="bold-font">&nbsp;&nbsp;<%=choice.choice_text%></span></td>
+                    </tr>
+                  <% end %>
+                  </table>
+                </div>
+              </div>
+              <% end %>
+              <div id="holder">
+                <div>
+                  <table><tr>
+                    <td><input type="checkbox" id="checkbox-terms" class="regular-checkbox" /><label for="checkbox-terms"></label></td>
+                    <td valign="top">&nbsp;&nbsp;I agree to <a href="/pages/terms">the terms</a>.</td>
+                  </tr></table>
+                </div>
+              </div>
+              <button id="connect_and_view" class="btn btn-orange btn-block" type="submit">Connect to WiFi and <em>Read the Room.</em></button>
+            </div>
+          </div> <!-- .row -->
+        </div> <!-- .col-md-6 -->
         </div>
-    </div>
-    <!-- /.row -->
+    </div><!-- /.row -->
+</div><!-- /.container -->
 
-</div>
-<!-- /.container -->
 <% content_for :footer do %>
 <script src="/assets/google_analytics.self-988e49f5dbadf1d7a81363e41c935547701e82df2321e1c8d7a9fd5fd6aee471.js?body=1"></script>
 <script type="text/javascript">
-
  
   $('#connect_and_view').on('click', function(){
     var promptId = <%= @prompt.id %>;
