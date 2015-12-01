@@ -1,10 +1,10 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>User:</strong>
-  <%= @prompt.user_id %>
-</p>
-
+<br/>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Edit Prompt</h3>
+  </div>
+  <div class="panel-body">
 <p>
   <strong>Text:</strong>
   <%= @prompt.prompt_text %>
@@ -19,6 +19,9 @@
   <strong>Active:</strong>
   <%= @prompt.active %>
 </p>
-
-<%= link_to 'Edit', edit_prompt_path(@prompt) %> |
-<%= link_to 'Back', prompts_path %>
+  </div>
+  <div class="panel-footer">
+    <%= link_to 'Edit', edit_prompt_path(@prompt), class: "btn btn-info" %>
+    <%= link_to 'Back', prompts_path, class: "btn btn-warning" %>
+    </div>
+</div>

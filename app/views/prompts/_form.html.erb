@@ -15,7 +15,7 @@
     <%= f.label :text %><br>
     <%= f.text_field :prompt_text, class: 'form-control'  %>
   </div>
-  <div class="field">
+  <div id="placeholder_text" class="field">
     <label>Placeholder text</label><br>
     <%= f.text_field :prompt_placeholder_text, class: 'form-control'  %>
   </div>
@@ -25,35 +25,45 @@
   </div>
   
   <br/>
+  <div id="nested_fields">
   <%= f.add_nested_fields_link :choices, 'Add prompt choice', class: 'btn btn-primary', role: 'button' %>
   <br/>
-  
-  <div id="nested_fields">
+  <br/>
   <%= f.nested_fields_for :choices do |ff| %>
     <div class="panel panel-default">
-      <div class="panel-heading">Choice <%= ff.remove_nested_fields_link %></div>
+      <div class="panel-heading">Choice <%= ff.remove_nested_fields_link '<i class="fa fa-trash"></i>'.html_safe, class: 'text-danger', role: 'button' %></div>
       <div class="panel-body">
         
         <%= ff.text_field :choice_text, class: 'form-control' %>
       </div>
     </div>
   <% end %>
-  </div>
+  </div> <!-- #nested_fields -->
 
-  <div class="actions">
-    <%= f.submit class: 'btn btn-primary' %>
   </div>
+  <div class="panel-footer"><%= link_to 'Back', prompts_path, class: "btn btn-warning" %> <%= f.submit class: 'btn btn-success' %></div>
+</div>
 <% end %>
 
 <% content_for :footer do %>
 <script type="text/javascript">
-  $('#prompt_prompt_type').change(function (){
-    if ( $('#prompt_prompt_type option:selected').val() === "open_ended" ) {
+  $('#prompt_prompt_type').change(function(){
+    prompt_show()}
+  );
+  
+  $(document).ready(function() {
+    prompt_show();
+  });
+  
+  function prompt_show(){
+    if ( $('#prompt_prompt_type option:selected').val() == "open_ended" ) {
       $("#nested_fields").hide();
+      $('#placeholder_text').show();
     } else {
       $("#nested_fields").show();
+      $('#placeholder_text').hide();
     }
-  });
+  };
 </script>
 
 <% end %>

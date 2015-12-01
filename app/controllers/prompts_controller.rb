@@ -1,5 +1,7 @@
 class PromptsController < ApplicationController
   before_action :set_prompt, only: [:show, :edit, :update, :destroy]
+  
+  layout "admin"
 
   # GET /prompts
   # GET /prompts.json
