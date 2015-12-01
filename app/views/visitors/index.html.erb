@@ -21,31 +21,54 @@
           <div class="row">
             <div class="col-md-12">
               <span class="hello">Hello</span><br/>
-              <p>Connect to WiFi and join our community!</p>
+              <p>
+                Connect to WiFi and join our community!<br/><br/>
+                <mark>Currently, <span class="badge"><%= @prompt.answers.count %></span> people in the coffee shop answered...</mark>
+              </p>
               <hr style="border-top: dotted 1px;color: #979797" />
-              <%= @prompt.prompt_text %><br/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <p><i class="fa fa-commenting-o fa-flip-horizontal"></i> <%= @prompt.prompt_text %></p>
               <% if @choices.blank? %>
-              <label for="inputEmail" class="sr-only">Type your response here!</label>
-              <input id="answer" type="input" class="form-control" placeholder="<%= @prompt.prompt_placeholder_text %>" required autofocus>
+                <label for="inputEmail" class="sr-only">Share your answer here!</label>
+                <input id="answer" type="input" class="form-control" placeholder="<%= @prompt.prompt_placeholder_text %>" required autofocus>
               <% else %>
               <div id="holder">
                 <div>
                   <table>
+                  <% if @prompt.prompt_type == "duel" %>
+                    <tr>
+                    <td><input type="radio" id="choicesRadio<%=@choices[0].id%>" name="choicesRadio" class="regular-radio" value="<%=@choices[0].id%>"/><label for="choicesRadio<%=@choices[0].id%>"></label></td>
+                    <td valign="top" width="50%"><span class="bold-font">&nbsp;&nbsp;<%=@choices[0].choice_text%></span></td>
+                    <td><input type="radio" id="choicesRadio<%=@choices[1].id%>" name="choicesRadio" class="regular-radio" value="<%=@choices[1].id%>"/><label for="choicesRadio<%=@choices[1].id%>"></label></td>
+                    <td valign="top" width="50%"><span class="bold-font">&nbsp;&nbsp;<%=@choices[1].choice_text%></span></td>
+                    </tr>
+                  <% else %>
+                  
                   <% @choices.each do |choice| %>
                     <tr>
                     <td><input type="radio" id="choicesRadio<%=choice.id%>" name="choicesRadio" class="regular-radio" value="<%=choice.id%>"/><label for="choicesRadio<%=choice.id%>"></label></td>
                     <td valign="top"><span class="bold-font">&nbsp;&nbsp;<%=choice.choice_text%></span></td>
                     </tr>
                   <% end %>
+                  
+                  <% end %>
                   </table>
                 </div>
               </div>
               <% end %>
+              <hr style="border-top: dotted 1px;color: #979797" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
               <div id="holder">
                 <div>
                   <table><tr>
                     <td><input type="checkbox" id="checkbox-terms" class="regular-checkbox" /><label for="checkbox-terms"></label></td>
-                    <td valign="top">&nbsp;&nbsp;I agree to <a href="/pages/terms">the terms</a>.</td>
+                    <td valign="top">&nbsp;&nbsp;I agree to <a href="/pages/terms">the WiFi terms and conditions</a>.</td>
                   </tr></table>
                 </div>
               </div>

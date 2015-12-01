@@ -5,7 +5,7 @@
 #holder > div {
 	clear: both;
 	padding: 2%;
-	margin-bottom: 20px;
+/* 	margin-bottom: 20px; */
 	float: left;
 	width: 96%;
 }
