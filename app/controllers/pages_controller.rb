@@ -22,11 +22,18 @@ class PagesController < ApplicationController
     
     def bar_chart
       @prompt = Prompt.find(params[:id].to_i)
-      choices = Choice.where(prompt_id: @prompt.id).all
+      @choices = Choice.where(prompt_id: @prompt.id).all
+      @answers = Answer.where(prompt_id: @prompt.id).all
       @chart_data = Hash.new
-      choices.each do |choice|
+      @choices.each do |choice|
         @chart_data[choice.choice_text] = Answer.where(choice_id: choice.id).count
       end
+      @winning_answer = largest_hash_key(@chart_data)
     end
+
+private
+  def largest_hash_key(hash)
+    hash.max_by{ |k,v| v }[0]
+  end
 
 end

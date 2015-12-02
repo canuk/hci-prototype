@@ -16,20 +16,20 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-md-2 col-md-offset-2 text-right"><%= image_tag "generic_boy_avatar.png", height: "280" %></div>
+        <div class="col-md-2 col-md-offset-2 text-right"><%= image_tag "generic_boy_avatar.png", height: "280", style: "padding-top:40px" %></div>
         <div class="col-md-6">
           <div class="row">
             <div class="col-md-12">
               <span class="hello">Hello</span><br/>
               <p>
                 Connect to WiFi and join our community!<br/><br/>
-                <mark>Currently, <span class="badge"><%= @prompt.answers.count %></span> people in the coffee shop answered...</mark>
+                <mark><span class="badge"><%= @prompt.answers.count %></span> people working from Philz Coffee right now answered...</mark>
               </p>
               <hr style="border-top: dotted 1px;color: #979797" />
             </div>
           </div>
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 well">
               <p><i class="fa fa-commenting-o fa-flip-horizontal"></i> <%= @prompt.prompt_text %></p>
               <% if @choices.blank? %>
                 <label for="inputEmail" class="sr-only">Share your answer here!</label>
@@ -59,7 +59,6 @@
                 </div>
               </div>
               <% end %>
-              <hr style="border-top: dotted 1px;color: #979797" />
             </div>
           </div>
           <div class="row">
