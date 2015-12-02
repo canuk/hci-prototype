@@ -1,0 +1,99 @@
+<div class="container">
+  <h1><%= @prompt.prompt_text %></h1>
+  <div class="row">
+    <% x = 1 %>
+    <% @chart_data.each do |prompt,responses| %>
+      <% unless responses == 0 %>
+        <div class="col-md-6 spa">  
+          <div id="box<%=x%>">
+            <div class="dot"><%=prompt%></div>
+            <% n = 0 %>
+            <% while n < responses %>
+              <%= image_tag "generic_boy_avatar.png", height: "90", class: "avatar#{x}" %>
+              <% n += 1 %>
+              
+            <% end %>
+        
+          </div>
+        </div>
+      <% end %> 
+    <% x += 1 %>
+    <% end %>
+    <% total_circles = x - 1 %>
+  </div>
+</div>
+  
+<% content_for :footer do %>
+<script type="text/javascript">
+<% x = total_circles %>
+<% while x > 0 %>
+        var circle<%=x%> = document.getElementById('box<%=x%>'),
+        imgs<%=x%> = document.getElementsByClassName('avatar<%=x%>'),
+        total<%=x%> = imgs<%=x%>.length,
+        coords<%=x%> = {},
+        diam<%=x%>, radius1<%=x%>, radius2<%=x%>, imgW<%=x%>;
+
+    // get circle diameter
+    // getBoundingClientRect outputs the actual px AFTER transform
+    //      using getComputedStyle does the job as we want
+    diam<%=x%> = parseInt( window.getComputedStyle(circle<%=x%>).getPropertyValue('width') ),
+    radius<%=x%> = diam<%=x%>/2,
+    imgW<%=x%> = imgs<%=x%>[0].getBoundingClientRect().width,
+    // get the dimensions of the inner circle we want the images to align to
+    radius2<%=x%> = radius<%=x%> - imgW<%=x%>
+
+    var i,
+        alpha<%=x%> = Math.PI / 2,
+        len<%=x%> = imgs<%=x%>.length,
+        corner<%=x%> = 2 * Math.PI / total<%=x%>;
+
+    for ( i = 0 ; i < total<%=x%>; i++ ){
+
+      imgs<%=x%>[i].style.left = parseInt( ( radius<%=x%> - imgW<%=x%> / 2 ) + ( radius2<%=x%> * Math.cos( alpha<%=x%> ) ) ) + 'px'
+      imgs<%=x%>[i].style.top =  parseInt( ( radius<%=x%> - imgW<%=x%> / 2 ) - ( radius2<%=x%> * Math.sin( alpha<%=x%> ) ) ) + 'px'
+
+      alpha<%=x%> = alpha<%=x%> - corner<%=x%>;
+    };
+<% x -= 1 %>
+<% end %>
+</script>
+<% end %>
+  
+<% x = total_circles %>
+  <% content_for :head do %>
+  <style type="text/css">
+        *,
+    *:before,
+    *:after {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+    #spacer {margin-top: 45px;}
+
+    .dot{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -20px;
+        margin-top: -20px;
+        font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 24px;
+        text-align: center;
+    }
+<% x = total_circles %>
+<% while x > 0 %>
+    #box<%=x%>{
+      width: 400px;
+      height: 400px;
+      position: relative;
+      border-radius: 100%;
+/*     border: 1px solid teal; */
+    }
+    #box<%=x%> img{
+      position: absolute;
+      -webkit-transition: all 1s;
+    }
+<% x -= 1 %>
+<% end %>
+</style>
+<% end %>

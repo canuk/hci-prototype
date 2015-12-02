@@ -30,6 +30,16 @@ class PagesController < ApplicationController
       end
       @winning_answer = largest_hash_key(@chart_data)
     end
+    
+    def says_who
+      @prompt = Prompt.find(params[:id].to_i)
+      @choices = Choice.where(prompt_id: @prompt.id).all
+      @answers = Answer.where(prompt_id: @prompt.id).all      
+      @chart_data = Hash.new
+      @choices.each do |choice|
+        @chart_data[choice.choice_text] = Answer.where(choice_id: choice.id).count
+      end
+    end
 
 private
   def largest_hash_key(hash)
