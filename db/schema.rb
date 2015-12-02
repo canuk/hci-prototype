@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117062930) do
+ActiveRecord::Schema.define(version: 20151202202114) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,8 +21,12 @@ ActiveRecord::Schema.define(version: 20151117062930) do
     t.integer  "prompt_id"
     t.integer  "choice_id"
     t.string   "answer_text"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "country"
+    t.string   "country_code"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   create_table "choices", force: :cascade do |t|
@@ -42,6 +46,8 @@ ActiveRecord::Schema.define(version: 20151117062930) do
     t.boolean  "active"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.string   "results_text"
+    t.string   "people_around_text"
   end
 
   create_table "users", force: :cascade do |t|

@@ -87,6 +87,6 @@ class PromptsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def prompt_params
-      params.require(:prompt).permit(:user_id, :prompt_text, :prompt_placeholder_text, :prompt_type, :active, choices_attributes:[:choice_text,:_destroy,:id])
+      params.require(:prompt).permit(:user_id, :prompt_text, :prompt_placeholder_text, :results_text, :people_around_text, :prompt_type, :active, choices_attributes:[:choice_text,:_destroy,:id])
     end
 end

@@ -12,16 +12,24 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :text %><br>
+    <%= f.label :prompt_text %><br>
     <%= f.text_field :prompt_text, class: 'form-control'  %>
   </div>
+  <div class="field">
+    <%= f.label :results_text %><br>
+    <%= f.text_field :results_text, class: 'form-control'  %>
+  </div>
+  <div class="field">
+    <%= f.label :people_around_text %><br>
+    <%= f.text_field :people_around_text, class: 'form-control'  %>
+  </div>  
   <div id="placeholder_text" class="field">
     <label>Placeholder text</label><br>
     <%= f.text_field :prompt_placeholder_text, class: 'form-control'  %>
   </div>
   <div class="field">
     <%= f.label :prompt_type %><br>
-    <%= f.select :prompt_type, options_for_select([ "open_ended", "multiple_choice", "duel" ], "open_ended"), class: 'form-control'  %>
+    <%= f.select :prompt_type, options_for_select([ "open_ended", "multiple_choice", "duel", "geo" ], "open_ended"), class: 'form-control'  %>
   </div>
   
   <br/>
