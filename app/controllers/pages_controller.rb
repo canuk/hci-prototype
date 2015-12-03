@@ -50,7 +50,6 @@ class PagesController < ApplicationController
         end
       end
       @winning_answer = largest_hash_key(@chart_data)
-      pp @chart_data
     end
     
     def geo_results
