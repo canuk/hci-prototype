@@ -28,7 +28,7 @@ class AnswersController < ApplicationController
     @answer.prompt_id = params[:prompt_id]
     @answer.choice_id = params[:choice_id]
     @answer.answer_text = params[:answer]
-    @answer.lat = params[:lat]
+#     @answer.lat = params[:lat]
     @answer.lng = params[:lng]
     @answer.administrative_area_level_1 = params[:state]
     @answer.country = params[:country]
