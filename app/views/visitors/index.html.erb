@@ -2,8 +2,8 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-xs-2 col-sm-offset-2 hidden-xs"><%= image_tag "generic_boy_avatar.png", height: "466" %></div>
-        <div class="col-xs-3 visible-xs-inline-block"><%= image_tag "generic_boy_avatar.png", height: "320" %></div>
+        <div class="col-xs-2 col-sm-offset-2 hidden-xs"><%= image_tag "generic_boy_avatar.png", height: "466", id: "lg_avatar" %></div>
+        <div class="col-xs-3 visible-xs-inline-block"><%= image_tag "generic_boy_avatar.png", height: "320", id: "lg_avatar" %></div>
         <div class="col-sm-6 col-xs-10">
           <div class="row">
             <div class="col-xs-12 visible-xs-block">
@@ -86,6 +86,14 @@
 <% if @prompt.prompt_type == "geo" %>
   <script  type="text/javascript" src="/js/jquery.geocomplete.min.js"></script>
   <script type="text/javascript">
+
+
+      $("#lg_avatar").click(function(e) {
+       e.preventDefault();
+       $(this).attr("src", "img/avatar_1.png");
+      });
+
+
       $(function(){
         
         $("#geocomplete").geocomplete({

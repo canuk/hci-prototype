@@ -1,31 +1,35 @@
 <div class="container">
   <h2 class="lead text-center"><%= @prompt.people_around_text %></h2>
   <div class="row">
+    <table class="table">
     <% x = 1 %>
-    <% @chart_data.each do |prompt,responses| %>
-      <% unless responses == 0 %>
-        <div class="col-md-6 spa">  
-          <div id="box<%=x%>">
-            <div class="dot"><%=prompt%>
-              <% if @states_only == false %>
-                <br/><img src="/flags/flags_iso/48/<%= Answer.where(country: prompt).first.country_short.downcase%>.png"/>
+      <% @chart_data.each do |prompt,responses| %>
+        <% unless responses == 0 %>
+          <% if x % 2 != 0 %><tr><% end %>
+          <td>  
+            <div id="box<%=x%>">
+              <div class="dot"><%=prompt%>
+                <% if @states_only == false %>
+                  <br/><img src="/flags/flags_iso/48/<%= Answer.where(country: prompt).first.country_short.downcase%>.png"/>
+                <% end %>
+              </div>
+              <% n = 0 %>
+              <% while n < responses %>
+                <% cm = 1 + rand(7) %>
+                <% if [1,3,5].include? cm %><a href="#" data-toggle="modal" data-target="#myModal"><% end %>
+                <%= image_tag "avatar_#{1 + rand(7)}.png", height: "90", class: "avatar#{x} speech_bubbles", title: "#{if [1,3,5].include? cm then "..." end}", data: { :toggle => "tooltip", :placement => "top"} %>
+                <% if [1,3,5].include? cm %></a><% end %>
+                <% n += 1 %>
               <% end %>
+          
             </div>
-            <% n = 0 %>
-            <% while n < responses %>
-              <% cm = 1 + rand(7) %>
-              <% if [1,3,5].include? cm %><a href="#" data-toggle="modal" data-target="#myModal"><% end %>
-              <%= image_tag "avatar_#{1 + rand(7)}.png", height: "90", class: "avatar#{x} speech_bubbles", title: "#{if [1,3,5].include? cm then "..." end}", data: { :toggle => "tooltip", :placement => "top"} %>
-              <% if [1,3,5].include? cm %></a><% end %>
-              <% n += 1 %>
-            <% end %>
-        
-          </div>
-        </div>
-      <% end %> 
+          </td>
+          <% if x % 2 == 0 %></tr><% end %>
+        <% end %>  <%# unless...%>
     <% x += 1 %>
     <% end %>
     <% total_circles = x - 1 %>
+    </table>
   </div>
 </div>
  
