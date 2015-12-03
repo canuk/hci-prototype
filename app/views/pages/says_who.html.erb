@@ -1,15 +1,19 @@
 <div class="container">
-  <h1><%= @prompt.prompt_text %></h1>
+  <h2 class="lead text-center"><%= @prompt.people_around_text %></h2>
   <div class="row">
     <% x = 1 %>
     <% @chart_data.each do |prompt,responses| %>
       <% unless responses == 0 %>
         <div class="col-md-6 spa">  
           <div id="box<%=x%>">
-            <div class="dot"><%=prompt%></div>
+            <div class="dot"><%=prompt%>
+              <% if @states_only == false %>
+                <br/><img src="/flags/flags_iso/48/<%= Answer.where(country: prompt).first.country_short.downcase%>.png"/>
+              <% end %>
+            </div>
             <% n = 0 %>
             <% while n < responses %>
-              <%= image_tag "generic_boy_avatar.png", height: "90", class: "avatar#{x}" %>
+              <%= image_tag "avatar_#{1 + rand(7)}.png", height: "90", class: "avatar#{x}" %>
               <% n += 1 %>
               
             <% end %>
@@ -56,6 +60,9 @@
     };
 <% x -= 1 %>
 <% end %>
+$(document).ready(function() {
+  $(".avatar1").append('<img src="/assets/images/speech_bubble.png"/>');
+});
 </script>
 <% end %>
   
@@ -75,19 +82,19 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        margin-left: -20px;
-        margin-top: -20px;
+        margin-left: -50px;
+        margin-top: 20px;
         font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 24px;
         text-align: center;
     }
 <% x = total_circles %>
 <% while x > 0 %>
     #box<%=x%>{
-      width: 400px;
-      height: 400px;
+      width: <%= @chart_data[@winning_answer] > 10 ? "400px":"300px"%>;
+      height: <%= @chart_data[@winning_answer] > 10 ? "400px":"300px"%>;
       position: relative;
       border-radius: 100%;
-/*     border: 1px solid teal; */
+/*     border: 1px solid rgba(139, 168, 181, 0.42); */
     }
     #box<%=x%> img{
       position: absolute;

@@ -2,8 +2,8 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-xs-2 col-sm-offset-2 hidden-xs"><%= image_tag "generic_boy_avatar.png", height: "466", style: "padding-top:50px;" %></div>
-        <div class="col-xs-3 visible-xs-inline-block"><%= image_tag "generic_boy_avatar.png", height: "320", style: "padding-top:10px;" %></div>
+        <div class="col-xs-2 col-sm-offset-2 hidden-xs"><%= image_tag "generic_boy_avatar.png", height: "466" %></div>
+        <div class="col-xs-3 visible-xs-inline-block"><%= image_tag "generic_boy_avatar.png", height: "320" %></div>
         <div class="col-sm-6 col-xs-10">
           <div class="row">
             <div class="col-xs-12 visible-xs-block">
@@ -52,7 +52,14 @@
                 </div>
               </div>
               <% elsif @prompt.prompt_type == "geo" %>
-                <div id="geo_picker" style="width: 500px; height: 400px;"></div>
+                <form>
+                  <input id="geocomplete" type="text" class="form-control" placeholder="<%= @prompt.prompt_placeholder_text %>" required autofocus />
+                    <input id="lat" name="lat" type="hidden" value="">
+                    <input id="lng" name="lng" type="hidden" value="">
+                    <input id="administrative_area_level_1" name="administrative_area_level_1" type="hidden" value="">
+                    <input id="country" name="country" type="hidden" value="">
+                    <input id="country_short" name="country_short" type="hidden" value="">
+                </form>
               <% end %>
             </div>
           </div>
@@ -76,11 +83,28 @@
 
 <% content_for :footer do %>
 <script src="/assets/google_analytics.self-988e49f5dbadf1d7a81363e41c935547701e82df2321e1c8d7a9fd5fd6aee471.js?body=1"></script>
-<script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+<script type="text/javascript" src='http://maps.google.com/maps/api/js?libraries=places'></script>
 <% if @prompt.prompt_type == "geo" %>
-  <script  type="text/javascript" src="/js/locationpicker.jquery.min.js"></script>
+  <script  type="text/javascript" src="/js/jquery.geocomplete.min.js"></script>
   <script type="text/javascript">
-    $('#geo_picker').locationpicker();
+      $(function(){
+        
+        $("#geocomplete").geocomplete({
+          details: "form",
+          types: ["geocode", "establishment"],
+        });
+        
+        $("#find").click(function(){
+          $("#geocomplete").trigger("geocode");
+        });
+        
+        
+        $("#examples a").click(function(){
+          $("#geocomplete").val($(this).text()).trigger("geocode");
+          return false;
+        });
+        
+      });
   </script>
 <% end %>
 <script type="text/javascript">
@@ -111,9 +135,14 @@
     
   });
 <% elsif @prompt.prompt_type == "geo" %>
-    var answer = $('input[name=choicesRadio]:checked').val();
+    var answer = $('#geocomplete').val();
+    var lat = $('#lat').val();
+    var lng = $('#lng').val();
+    var state = $('#administrative_area_level_1').val();
+    var country = $('#country').val();
+    var country_short = $('#country_short').val();
     $.ajax({
-      url: "/answers/record?prompt_id="+promptId+"&choice_id="+answer,
+      url: "/answers/record?prompt_id="+promptId+"&answer="+answer+"&lat="+lat+"&lng="+lng+"&state="+state+"&country="+country+"&country_short="+country_short,
       type: 'POST',
       success: function(msg) {
         document.location.href='/pages/geo_results/<%=@prompt.id%>';

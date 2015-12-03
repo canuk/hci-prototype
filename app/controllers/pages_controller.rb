@@ -35,10 +35,28 @@ class PagesController < ApplicationController
       @prompt = Prompt.find(params[:id].to_i)
       @choices = Choice.where(prompt_id: @prompt.id).all
       @answers = Answer.where(prompt_id: @prompt.id).all      
-      @chart_data = Hash.new
-      @choices.each do |choice|
-        @chart_data[choice.choice_text] = Answer.where(choice_id: choice.id).count
+      if @prompt.prompt_type == "geo"
+        @chart_data = Answer.where(prompt_id: @prompt.id).group('country').count
+        if @chart_data.length == 1 and @chart_data.keys.first == "United States"
+          @states_only = true
+          @chart_data = Answer.where(prompt_id: @prompt.id).group('administrative_area_level_1').count
+        else 
+          @states_only = false
+        end
+      else
+        @chart_data = Hash.new
+        @choices.each do |choice|
+          @chart_data[choice.choice_text] = Answer.where(choice_id: choice.id).count
+        end
       end
+      @winning_answer = largest_hash_key(@chart_data)
+      pp @chart_data
+    end
+    
+    def geo_results
+      @prompt = Prompt.find(params[:id].to_i)
+      @answers = Answer.where(prompt_id: @prompt.id).group('country_short').count
+      @winning_answer = largest_hash_key(@answers)
     end
 
 private

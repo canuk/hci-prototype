@@ -28,6 +28,11 @@ class AnswersController < ApplicationController
     @answer.prompt_id = params[:prompt_id]
     @answer.choice_id = params[:choice_id]
     @answer.answer_text = params[:answer]
+    @answer.lat = params[:lat]
+    @answer.lng = params[:lng]
+    @answer.administrative_area_level_1 = params[:state]
+    @answer.country = params[:country]
+    @answer.country_short = params[:country_short]
 
     respond_to do |format|
       if @answer.save
@@ -88,6 +93,6 @@ class AnswersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def answer_params
-      params.require(:answer).permit(:user_id, :prompt_id, :choice_id, :answer_text)
+      params.require(:answer).permit(:user_id, :prompt_id, :choice_id, :answer_text, :lat, :lng, :administrative_area_level_1, :country, :country_short)
     end
 end

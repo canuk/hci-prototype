@@ -33,11 +33,8 @@
   $("input[name='is_active']:radio").change(function(){
     console.log($(this).val());
         $.ajax({
-            url: "/prompts/set_active/"+$(this).val(), 
-            success: function(result){
-                $("#div1").html(result);
-              }
-        });
+            url: "/prompts/set_active/"+$(this).val()
+            });
   });
 </script>
 <% end %>
