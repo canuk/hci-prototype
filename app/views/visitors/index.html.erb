@@ -82,17 +82,28 @@
 </div><!-- /.container -->
 
 <% content_for :footer do %>
-<script type="text/javascript" src='http://maps.google.com/maps/api/js?libraries=places'></script>
 <% if @prompt.prompt_type == "geo" %>
+  <script type="text/javascript" src='http://maps.google.com/maps/api/js?libraries=places'></script>
   <script  type="text/javascript" src="/js/jquery.geocomplete.min.js"></script>
   <script type="text/javascript">
-
-
+  var avatars = [ "/img/avatar_1.png",
+                  "/img/avatar_2.png",
+                  "/img/avatar_3.png",
+                  "/img/avatar_4.png",
+                  "/img/avatar_5.png",
+                  "/img/avatar_6.png",
+                  "/img/avatar_7.png"
+                ],
+      c = 0,
+      n = avatars.length;
+    
       $("#lg_avatar").click(function(e) {
        e.preventDefault();
-       $(this).attr("src", "img/avatar_1.png");
+        c = c + 1;
+        c = c<0? n-1 : c%n ;
+       $(this).attr("src", avatars[c]);
+       $(this).css("margin-right", 20);
       });
-
 
       $(function(){
         
