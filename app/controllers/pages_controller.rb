@@ -54,7 +54,8 @@ class PagesController < ApplicationController
     
     def geo_results
       @prompt = Prompt.find(params[:id].to_i)
-      @answers = Answer.where(prompt_id: @prompt.id).group('country_short').count
+      @answers = Answer.where(prompt_id: @prompt.id).group('country_short').count.sort
+      
       @winning_answer = largest_hash_key(@answers)
     end
 

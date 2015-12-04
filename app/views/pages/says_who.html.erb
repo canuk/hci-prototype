@@ -1,7 +1,7 @@
 <div class="container">
   <h2 class="lead text-center"><%= @prompt.people_around_text %></h2>
   <div class="row">
-    <table class="table">
+    <table class="table borderless">
     <% x = 1 %>
       <% @chart_data.each do |prompt,responses| %>
         <% unless responses == 0 %>
@@ -110,9 +110,10 @@ $(document).ready(function() {
 
     .dot{
         position: absolute;
+        width: auto;
         left: 50%;
         top: 50%;
-        margin-left: -50px;
+        margin-left: -60px;
         margin-top: 20px;
         font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 24px;
         text-align: center;

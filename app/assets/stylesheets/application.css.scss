@@ -71,3 +71,8 @@ a.btn-primary {color: white;}
   	border-left-color: #D9D9D9;
   	top: -9px;
   }
+  
+  .borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+    border: none;
+    padding-bottom: 50px;
+}
