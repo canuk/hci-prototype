@@ -22,6 +22,7 @@ gem 'high_voltage'
 gem 'pg'
 gem 'unicorn'
 gem 'unicorn-rails'
+gem 'puma'
 gem 'upmin-admin'
 group :development do
   gem 'better_errors'

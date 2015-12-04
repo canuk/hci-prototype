@@ -2,8 +2,12 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-xs-2 col-sm-offset-2 hidden-xs"><%= image_tag "generic_boy_avatar.png", height: "466", id: "lg_avatar" %></div>
-        <div class="col-xs-3 visible-xs-inline-block"><%= image_tag "generic_boy_avatar.png", height: "320", id: "lg_avatar" %></div>
+        <div class="col-xs-3 col-sm-offset-1 hidden-xs">
+          <%= image_tag "generic_boy_avatar.png", height: "466", id: "lg_avatar", class: "wraption", title: "Click to customize" %>
+        </div>
+        <div class="col-xs-3 visible-xs-inline-block">
+          <%= image_tag "generic_boy_avatar.png", height: "320", id: "lg_avatar" %>
+        </div>
         <div class="col-sm-6 col-xs-10">
           <div class="row">
             <div class="col-xs-12 visible-xs-block">
@@ -23,6 +27,7 @@
           </div>
           <div class="row well">
             <div class="col-xs-12">
+              <input type="hidden" id="user_avatar" name="user_avatar" value="" />
               <p><i class="fa fa-commenting-o fa-flip-horizontal"></i> <%= @prompt.prompt_text %></p>
               <% if @prompt.prompt_type == "open_ended" %>
                 <label for="answer" class="sr-only">Share your answer here!</label>
@@ -103,6 +108,7 @@
         c = c<0? n-1 : c%n ;
        $(this).attr("src", avatars[c]);
        $(this).css("margin-right", 20);
+       $('#user_avatar').val(c);
       });
 
       $(function(){
@@ -133,7 +139,7 @@
     var answer = $('#answer').val();
     
     $.ajax({
-      url: "/answers/record?prompt_id="+promptId+"&answer="+answer,
+      url: "/answers/record?prompt_id="+promptId+"&answer="+answer+"&user_avatar="+user_avatar,
       type: 'POST',
       success: function(msg) {
         document.location.href='/pages/word_cloud/<%=@prompt.id%>';
@@ -144,7 +150,7 @@
 <% elsif @prompt.prompt_type == "duel" or @prompt.prompt_type == "multiple_choice" %>
     var answer = $('input[name=choicesRadio]:checked').val();
     $.ajax({
-      url: "/answers/record?prompt_id="+promptId+"&choice_id="+answer,
+      url: "/answers/record?prompt_id="+promptId+"&choice_id="+answer+"&user_avatar="+user_avatar,
       type: 'POST',
       success: function(msg) {
         document.location.href='/pages/bar_chart/<%=@prompt.id%>';
@@ -159,8 +165,9 @@
     var state = $('#administrative_area_level_1').val();
     var country = $('#country').val();
     var country_short = $('#country_short').val();
+    var user_avatar = $('#user_avatar').val();
     $.ajax({
-      url: "/answers/record?prompt_id="+promptId+"&answer="+answer+"&lat="+lat+"&lng="+lng+"&state="+state+"&country="+country+"&country_short="+country_short,
+      url: "/answers/record?prompt_id="+promptId+"&answer="+answer+"&lat="+lat+"&lng="+lng+"&state="+state+"&country="+country+"&country_short="+country_short+"&user_avatar="+user_avatar,
       type: 'POST',
       success: function(msg) {
         document.location.href='/pages/geo_results/<%=@prompt.id%>';
